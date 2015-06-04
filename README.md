@@ -30,7 +30,7 @@ loadingActivity.hideLoadingActivity(success: false, animated: true)
 ```swift
 var loadingActivity = CozyLoadingActivity(text: "Uploading...", sender: mainPointer, disableUI: true)
 
-var userObject = PFUser.currentUser()
+var postObject = PFObject(className: "className")
 postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Void in
     if error == nil {
        if succeeded == true {
