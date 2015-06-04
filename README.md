@@ -1,5 +1,5 @@
 # CozyLoadingActivity
-Custom Swift loading activity for iOS7-8. Really simple to use, just add the class and write 1 line of code to add and one line to remove it and thats it. Also no need for images.
+Custom Swift loading activity for iOS7-8. Really simple to use, just add the class and write 1 line of code to add and one line to remove it and thats it. Also no need for images. Its basically a UIView with UILabel and UIActivityIndicatorView inside it.
 
 ## How to use:
 ```swift
@@ -55,3 +55,4 @@ postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Voi
      0. You just DO WHAT THE FUCK YOU WANT TO.
 
 http://www.wtfpl.net/about/
+
