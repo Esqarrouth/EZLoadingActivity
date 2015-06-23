@@ -44,7 +44,7 @@ class CozyLoadingActivity: UIView {
 
         let width = sender.view.frame.width / 1.6
         let height = width / 3
-        self.init(frame: CGRect(x: sender.view.frame.midX - width/2, y: sender.view.frame.midY - height*2, width: width, height: height))
+        self.init(frame: CGRect(x: sender.view.frame.midX - width/2, y: sender.view.frame.midY - height/2, width: width, height: height))
         backgroundColor = CLABackgroundColor
         alpha = 1
         layer.cornerRadius = 8
