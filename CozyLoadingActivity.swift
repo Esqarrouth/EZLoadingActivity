@@ -162,6 +162,7 @@ extension NSObject {
     /// Cozy extension
     func callSelectorAsync(selector: Selector, delay: NSTimeInterval) {
         var timer = NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: selector, userInfo: nil, repeats: false)
+        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
     
 }
