@@ -12,7 +12,11 @@ CozyLoadingActivity.show("Loading...", sender: self, disableUI: true)
 'disableUI' stops user interactions until you hide loadingactivity.  
 
 ## How to dismiss:
-You can also do failure view:
+```swift
+CozyLoadingActivity.hide(success: true, animated: true)
+```
+
+## Failure:
 ```swift
 CozyLoadingActivity.hide(success: false, animated: true)
 ```
@@ -59,7 +63,7 @@ postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Voi
           print("Upload Failed")
        }
     } else {
-       CozyLoadingActivity.hide(success: false, animated: true)
+        CozyLoadingActivity.hide(success: false, animated: true)
         print("Error")
     }
 }
