@@ -72,7 +72,7 @@ postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Voi
 ## No object tracking:
 CozyLoadingActivity is a singleton object so you don't need to keep track of its instance.  
 
-##Installation (~2 minutes)
+##Installation (~10 seconds)
 
 1. Download and drop 'CozyLoadingActivity.swift' in your project.  
 2. Congratulations!  
