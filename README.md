@@ -1,58 +1,90 @@
-# CozyLoadingActivity
-Lightweight Swift loading activity for iOS7 & iOS8. Really simple to use, just add the class and write 1 line of code to add and one line to remove it and thats it. Also no need for images. Its basically a UIView with UILabel and UIActivityIndicatorView inside it.
+CozyLoadingActivity
+==========
+Lightweight Swift loading activity for iOS7+. Really simple to use, just add the class and write 1 line of code. 
 
-## How to use:
+![demo](http://i.imgur.com/xLHKvSB.gif)
+
+## Easy to use:
 ```swift
-var loadingActivity = CozyLoadingActivity(text: "Loading...", sender: self, disableUI: true)
+CozyLoadingActivity.show("Loading...", sender: self, disableUI: true)
 ```
-Sender is a UIViewController and disableUI stops user interactions until you hide loadingactivity.
-Use this line to initialize CozyLoadingActivity and this view pops up in the middle of the screen:
-![CozyLoadingActivity Loading...](http://i.imgur.com/O6EZIr7.png)
-```swift
-loadingActivity.hideLoadingActivity(success: true, animated: true)
-```
-If animated is set to true, the view animates from the old view in to the new one like this:
+'sender' is a UIViewController.  
+'disableUI' stops user interactions until you hide loadingactivity.  
 
-![CozyLoadingActivity Animation](http://i.imgur.com/eOVrMtx.png)
-
-Here is the success view, stay on screen for half a second:
-
-![CozyLoadingActivity Success](http://i.imgur.com/mDg7DmG.png)
-
+## How to dismiss:
 You can also do failure view:
 ```swift
-loadingActivity.hideLoadingActivity(success: false, animated: true)
+CozyLoadingActivity.hide(success: false, animated: true)
 ```
-![CozyLoadingActivity Failure](http://i.imgur.com/OQ1cwvn.png)
+![demo](http://i.imgur.com/x2BAEmG.gif)
+
+## Without Animation:
+```swift
+CozyLoadingActivity.hide(success: true, animated: false)
+```
+![demo](http://i.imgur.com/fXvCbIy.gif)
+
+## Editing:
+```swift
+CozyLoadingActivity.Settings.CLASuccessColor = UIColor.blueColor()
+CozyLoadingActivity.show("Loading...", sender: self, disableUI: false)
+```
+
+|Settings Options|
+| -------------|
+|CLABackgroundColor|
+|CLAActivityColor|
+|CLATextColor|
+|CLAFontName|
+|CLASuccessIcon|
+|CLAFailIcon|
+|CLASuccessText|
+|CLAFailText|
+|CLASuccessColor|
+|CLAFailColor|
 
 ## Example Use Case:
 
 ```swift
-var loadingActivity = CozyLoadingActivity(text: "Uploading...", sender: mainPointer, disableUI: true)
+CozyLoadingActivity.show("Uploading...", sender: self, disableUI: false)
 
 var postObject = PFObject(className: "className")
 postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Void in
     if error == nil {
        if succeeded == true {
-          loadingActivity.hideLoadingActivity(success: true, animated: true)
-          println("Upload Complete")
+          CozyLoadingActivity.hide(success: true, animated: false)
+          print("Upload Complete")
         } else {
-          loadingActivity.hideLoadingActivity(success: false, animated: true)
-          println("Upload Failed")
+          CozyLoadingActivity.hide(success: false, animated: true)
+          print("Upload Failed")
        }
     } else {
-       loadingActivity.hideLoadingActivity(success: false, animated: true)
-        println("Error")
+       CozyLoadingActivity.hide(success: false, animated: true)
+        print("Error")
     }
 }
 ```
 
-## License:
+## No object tracking:
+CozyLoadingActivity is a singleton object so you don't need to keep track of its instance.  
 
-          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
-    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 
+##Installation (~2 minutes)
 
-     0. You just DO WHAT THE FUCK YOU WANT TO.
+1. Download and drop 'CozyLoadingActivity.swift' in your project.  
+2. Congratulations!  
 
-http://www.wtfpl.net/about/
+##Requirements
 
+- Xcode 6 or later (Tested on 7)
+- iOS 7 or later (Tested on 9)
+
+##Possible features
+
+- More customization
+- Pod support 
+
+##License
+CozyLoadingActivity is available under the MIT license. See the [LICENSE file](https://github.com/goktugyil/CozyLoadingActivity/blob/master/LICENSE).
+
+##Keywords
+swift, hud, loading, activity, progresshud, progress, track, spinner,
