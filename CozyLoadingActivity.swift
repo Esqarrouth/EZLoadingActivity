@@ -144,6 +144,7 @@ struct CozyLoadingActivity {
                     self.icon.alpha = 1
                     }, completion: { (value: Bool) in
                         self.callSelectorAsync("removeFromSuperview", delay: animationDuration)
+                        instance = nil
                 })
             } else {
                 activityView.stopAnimating()
