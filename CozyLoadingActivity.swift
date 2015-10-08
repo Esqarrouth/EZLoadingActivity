@@ -26,26 +26,39 @@ struct CozyLoadingActivity {
         static var CLASuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
         static var CLAFailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
     }
-
+    
     private static var instance: LoadingActivity?
+    private static var hidingInProgress = false
     
-    /// Disable UI stops users touch actions until CozyLoadingActivity is hidden.
-    static func show(text: String, sender: UIViewController, disableUI: Bool) {
-        if instance == nil {
-            instance = LoadingActivity(text: text, sender: sender, disableUI: disableUI)
-        } else {
+    /// Disable UI stops users touch actions until CozyLoadingActivity is hidden. Return success status
+    static func show(text: String, sender: UIViewController, disableUI: Bool) -> Bool {
+        guard instance == nil else {
             print("CozyLoadingActivity: You still have an active activity, please stop that before creating a new one")
+            return false
         }
+        
+        instance = LoadingActivity(text: text, sender: sender, disableUI: disableUI)
+        print("instance is nil creating loading")
+        return true
     }
     
-    static func hide(success success: Bool, animated: Bool) {
-        if instance != nil {
-            instance?.hideLoadingActivity(success: success, animated: animated)
-        } else {
+    /// Returns success status
+    static func hide(success success: Bool, animated: Bool) -> Bool {
+        guard instance != nil else {
             print("CozyLoadingActivity: You don't have an activity instance")
+            return false
         }
+        
+        guard hidingInProgress == false else {
+            print("CozyLoadingActivity: Hiding already in progress")
+            return false
+        }
+        
+        instance?.hideLoadingActivity(success: success, animated: animated)
+        print("instance is not nil, hiding current one")
+        return true
     }
-
+    
     private class LoadingActivity: UIView {
         var textLabel: UILabel!
         var activityView: UIActivityIndicatorView!
@@ -55,7 +68,7 @@ struct CozyLoadingActivity {
         convenience init(text: String, sender: UIViewController, disableUI: Bool) {
             let width = sender.view.frame.width / 1.6
             let height = width / 3
-            self.init(frame: CGRect(x: sender.view.frame.midX - width/2, y: sender.view.frame.midY - height/2, width: width, height: height)) // height*2 /2 olmali view size duzelince
+            self.init(frame: CGRect(x: sender.view.frame.midX - width/2, y: sender.view.frame.midY - height/2, width: width, height: height))
             backgroundColor = Settings.CLABackgroundColor
             alpha = 1
             layer.cornerRadius = 8
@@ -107,10 +120,11 @@ struct CozyLoadingActivity {
         }
         
         func hideLoadingActivity(success success: Bool, animated: Bool) {
+            hidingInProgress = true
             if UIDisabled {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
             }
-            
+
             var animationDuration: Double!
             if success {
                 animationDuration = 0.5
@@ -136,7 +150,7 @@ struct CozyLoadingActivity {
                 textLabel.text = Settings.CLAFailText
             }
             addSubview(icon)
-            
+
             if animated {
                 icon.alpha = 0
                 activityView.stopAnimating()
@@ -145,10 +159,13 @@ struct CozyLoadingActivity {
                     }, completion: { (value: Bool) in
                         self.callSelectorAsync("removeFromSuperview", delay: animationDuration)
                         instance = nil
+                        hidingInProgress = false
                 })
             } else {
                 activityView.stopAnimating()
                 self.callSelectorAsync("removeFromSuperview", delay: animationDuration)
+                instance = nil
+                hidingInProgress = false
             }
         }
     }
@@ -172,3 +189,5 @@ private extension NSObject {
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
 }
+
+
