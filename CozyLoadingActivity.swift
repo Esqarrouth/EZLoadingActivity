@@ -54,7 +54,14 @@ struct CozyLoadingActivity {
             return false
         }
         
-        instance?.hideLoadingActivity(success: success, animated: animated)
+        if !NSThread.currentThread().isMainThread {
+            dispatch_async(dispatch_get_main_queue()) {
+                instance?.hideLoadingActivity(success: success, animated: animated)
+            }
+        } else {
+            instance?.hideLoadingActivity(success: success, animated: animated)
+        }
+        
         print("instance is not nil, hiding current one")
         return true
     }
@@ -124,7 +131,7 @@ struct CozyLoadingActivity {
             if UIDisabled {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
             }
-
+            
             var animationDuration: Double!
             if success {
                 animationDuration = 0.5
@@ -150,7 +157,7 @@ struct CozyLoadingActivity {
                 textLabel.text = Settings.CLAFailText
             }
             addSubview(icon)
-
+            
             if animated {
                 icon.alpha = 0
                 activityView.stopAnimating()
