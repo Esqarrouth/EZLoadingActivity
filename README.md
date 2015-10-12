@@ -86,6 +86,7 @@ CozyLoadingActivity is a singleton object so you don't need to keep track of its
 
 - More customization
 - Pod support 
+- OSX compatibility and add here https://github.com/AndrewSB/awesome-osx
 
 ##License
 CozyLoadingActivity is available under the MIT license. See the [LICENSE file](https://github.com/goktugyil/CozyLoadingActivity/blob/master/LICENSE).
