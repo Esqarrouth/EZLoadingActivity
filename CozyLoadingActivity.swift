@@ -42,6 +42,14 @@ struct CozyLoadingActivity {
         return true
     }
     
+    static func showWithDelay(text: String, sender: UIViewController, disableUI: Bool, seconds: Double) -> Bool {
+        let showValue = show(text, sender: sender, disableUI: disableUI)
+        delay(seconds) { () -> () in
+            hide(success: true, animated: false)
+        }
+        return showValue
+    }
+
     /// Returns success status
     static func hide(success success: Bool, animated: Bool) -> Bool {
         guard instance != nil else {
@@ -64,6 +72,12 @@ struct CozyLoadingActivity {
         
         print("instance is not nil, hiding current one")
         return true
+    }
+    
+    private static func delay(seconds: Double, after: ()->()) {
+        let queue = dispatch_get_main_queue()
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
+        dispatch_after(time, queue, after)
     }
     
     private class LoadingActivity: UIView {
@@ -196,5 +210,6 @@ private extension NSObject {
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
 }
+
 
 
