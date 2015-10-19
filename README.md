@@ -69,6 +69,12 @@ postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Voi
 }
 ```
 
+######Showing CozyLoadingActivity for a certain time:
+
+```swift
+CozyLoadingActivity.showWithDelay("Waiting...", sender: self, disableUI: false, seconds: 2)
+```
+
 ## No object tracking:
 CozyLoadingActivity is a singleton object so you don't need to keep track of its instance.  
 
