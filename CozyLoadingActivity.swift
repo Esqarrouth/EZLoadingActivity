@@ -38,7 +38,6 @@ struct CozyLoadingActivity {
         }
         
         instance = LoadingActivity(text: text, sender: sender, disableUI: disableUI)
-        print("instance is nil creating loading")
         return true
     }
     
@@ -69,8 +68,6 @@ struct CozyLoadingActivity {
         } else {
             instance?.hideLoadingActivity(success: success, animated: animated)
         }
-        
-        print("instance is not nil, hiding current one")
         return true
     }
     
