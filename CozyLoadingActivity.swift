@@ -25,6 +25,7 @@ struct CozyLoadingActivity {
         static var CLAFailText = "Failure"
         static var CLASuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
         static var CLAFailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
+        static var CLAWidthDivision: CGFloat = 1.6
     }
     
     private static var instance: LoadingActivity?
@@ -84,6 +85,10 @@ struct CozyLoadingActivity {
         var UIDisabled = false
         
         convenience init(text: String, sender: UIViewController, disableUI: Bool) {
+            if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                Settings.CLAWidthDivision = 3.5
+            }
+            
             let width = sender.view.frame.width / 1.6
             let height = width / 3
             self.init(frame: CGRect(x: sender.view.frame.midX - width/2, y: sender.view.frame.midY - height/2, width: width, height: height))
