@@ -50,7 +50,7 @@ struct CozyLoadingActivity {
     }
 
     /// Returns success status
-    static func hide(success success: Bool, animated: Bool) -> Bool {
+    static func hide(success success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
             print("CozyLoadingActivity: You don't have an activity instance")
             return false
@@ -137,17 +137,19 @@ struct CozyLoadingActivity {
             return myBezier
         }
         
-        func hideLoadingActivity(success success: Bool, animated: Bool) {
+        func hideLoadingActivity(success success: Bool?, animated: Bool) {
             hidingInProgress = true
             if UIDisabled {
                 UIApplication.sharedApplication().endIgnoringInteractionEvents()
             }
             
-            var animationDuration: Double!
-            if success {
-                animationDuration = 0.5
-            } else {
-                animationDuration = 1
+            var animationDuration: Double = 0
+            if success != nil {
+                if success! {
+                    animationDuration = 0.5
+                } else {
+                    animationDuration = 1
+                }
             }
             
             icon = UILabel(frame: CGRect(x: 10, y: frame.height/2 - 20, width: 40, height: 40))
@@ -158,15 +160,18 @@ struct CozyLoadingActivity {
                 textLabel.fadeTransition(animationDuration)
             }
             
-            if success {
-                icon.textColor = Settings.CLASuccessColor
-                icon.text = Settings.CLASuccessIcon
-                textLabel.text = Settings.CLASuccessText
-            } else {
-                icon.textColor = Settings.CLAFailColor
-                icon.text = Settings.CLAFailIcon
-                textLabel.text = Settings.CLAFailText
+            if success != nil {
+                if success! {
+                    icon.textColor = Settings.CLASuccessColor
+                    icon.text = Settings.CLASuccessIcon
+                    textLabel.text = Settings.CLASuccessText
+                } else {
+                    icon.textColor = Settings.CLAFailColor
+                    icon.text = Settings.CLAFailIcon
+                    textLabel.text = Settings.CLAFailText
+                }
             }
+
             addSubview(icon)
             
             if animated {
