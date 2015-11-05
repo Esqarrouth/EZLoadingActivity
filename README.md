@@ -28,6 +28,12 @@ CozyLoadingActivity.hide(success: true, animated: false)
 ```
 ![demo](http://i.imgur.com/fXvCbIy.gif)
 
+## Hide Directly:
+```swift
+CozyLoadingActivity.hide()
+```
+![demo](http://i.imgur.com/2cySGp6.gif)
+
 ## Editing:
 ```swift
 CozyLoadingActivity.Settings.CLASuccessColor = UIColor.blueColor()
