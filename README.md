@@ -6,9 +6,8 @@ Lightweight Swift loading activity for iOS7+. Really simple to use, just add the
 
 ## Easy to use:
 ```swift
-CozyLoadingActivity.show("Loading...", sender: self, disableUI: true)
+CozyLoadingActivity.show("Loading...", disableUI: true)
 ```
-'sender' is a UIViewController.  
 'disableUI' stops user interactions until you hide loadingactivity.  
 
 ## How to dismiss:
@@ -23,7 +22,7 @@ CozyLoadingActivity.hide(success: false, animated: true)
 ![demo](http://i.imgur.com/x2BAEmG.gif)
 
 ## Without Animation:
-```swift
+```swifts
 CozyLoadingActivity.hide(success: true, animated: false)
 ```
 ![demo](http://i.imgur.com/fXvCbIy.gif)
@@ -37,7 +36,7 @@ CozyLoadingActivity.hide()
 ## Editing:
 ```swift
 CozyLoadingActivity.Settings.CLASuccessColor = UIColor.blueColor()
-CozyLoadingActivity.show("Loading...", sender: self, disableUI: false)
+CozyLoadingActivity.show("Loading...", disableUI: false)
 ```
 
 |Settings Options|
@@ -56,7 +55,7 @@ CozyLoadingActivity.show("Loading...", sender: self, disableUI: false)
 ## Example Use Case:
 
 ```swift
-CozyLoadingActivity.show("Uploading...", sender: self, disableUI: false)
+CozyLoadingActivity.show("Uploading...", disableUI: false)
 
 var postObject = PFObject(className: "className")
 postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Void in
@@ -78,7 +77,7 @@ postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Voi
 ######Showing CozyLoadingActivity for a certain time:
 
 ```swift
-CozyLoadingActivity.showWithDelay("Waiting...", sender: self, disableUI: false, seconds: 2)
+CozyLoadingActivity.showWithDelay("Waiting...", disableUI: false, seconds: 2)
 ```
 
 ## No object tracking:
