@@ -35,29 +35,29 @@ struct CozyLoadingActivity {
             }
         }
     }
-    
+        
     private static var instance: LoadingActivity?
     private static var hidingInProgress = false
     
     /// Disable UI stops users touch actions until CozyLoadingActivity is hidden. Return success status
-    static func show(text: String, sender: UIViewController, disableUI: Bool) -> Bool {
+    static func show(text: String, disableUI: Bool) -> Bool {
         guard instance == nil else {
             print("CozyLoadingActivity: You still have an active activity, please stop that before creating a new one")
             return false
         }
         
-        instance = LoadingActivity(text: text, sender: sender, disableUI: disableUI)
+        instance = LoadingActivity(text: text, disableUI: disableUI)
         return true
     }
     
-    static func showWithDelay(text: String, sender: UIViewController, disableUI: Bool, seconds: Double) -> Bool {
-        let showValue = show(text, sender: sender, disableUI: disableUI)
+    static func showWithDelay(text: String, disableUI: Bool, seconds: Double) -> Bool {
+        let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
             hide(success: true, animated: false)
         }
         return showValue
     }
-
+    
     /// Returns success status
     static func hide(success success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
@@ -77,6 +77,7 @@ struct CozyLoadingActivity {
         } else {
             instance?.hideLoadingActivity(success: success, animated: animated)
         }
+        
         return true
     }
     
@@ -92,10 +93,10 @@ struct CozyLoadingActivity {
         var icon: UILabel!
         var UIDisabled = false
         
-        convenience init(text: String, sender: UIViewController, disableUI: Bool) {
-            let width = sender.view.frame.width / CLAWidthDivision
+        convenience init(text: String, disableUI: Bool) {
+            let width = UIScreen.CLAScreenWidth / Settings.CLAWidthDivision
             let height = width / 3
-            self.init(frame: CGRect(x: sender.view.frame.midX - width/2, y: sender.view.frame.midY - height/2, width: width, height: height))
+            self.init(frame: CGRect(x: UIScreen.CLAScreenWidth/2 - width/2, y: UIScreen.CLAScreenHeight/2 - height/2, width: width, height: height))
             backgroundColor = Settings.CLABackgroundColor
             alpha = 1
             layer.cornerRadius = 8
@@ -119,7 +120,7 @@ struct CozyLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
-            sender.view.addSubview(self)
+            UIApplication.CLAtopMostController().view.addSubview(self)
             
             if disableUI {
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -222,5 +223,41 @@ private extension NSObject {
     }
 }
 
+private extension UIScreen {
+    class var CLAOrientation: UIInterfaceOrientation {
+        get {
+            return UIApplication.sharedApplication().statusBarOrientation
+        }
+    }
+    class var CLAScreenWidth: CGFloat {
+        get {
+            if UIInterfaceOrientationIsPortrait(Orientation) {
+                return UIScreen.mainScreen().bounds.size.width
+            } else {
+                return UIScreen.mainScreen().bounds.size.height
+            }
+        }
+    }
+    class var CLAScreenHeight: CGFloat {
+        get {
+            if UIInterfaceOrientationIsPortrait(Orientation) {
+                return UIScreen.mainScreen().bounds.size.height
+            } else {
+                return UIScreen.mainScreen().bounds.size.width
+            }
+        }
+    }
+}
 
+extension UIApplication {
+    class func CLAtopMostController() -> UIViewController {
+        let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
+        var topController = appDelegate.window!.rootViewController
+        
+        while topController?.presentedViewController != nil {
+            topController = topController?.presentedViewController
+        }
+        return topController!
+    }
+}
 
