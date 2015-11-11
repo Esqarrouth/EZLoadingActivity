@@ -231,7 +231,7 @@ private extension UIScreen {
     }
     class var CLAScreenWidth: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if UIInterfaceOrientationIsPortrait(CLAOrientation) {
                 return UIScreen.mainScreen().bounds.size.width
             } else {
                 return UIScreen.mainScreen().bounds.size.height
@@ -240,7 +240,7 @@ private extension UIScreen {
     }
     class var CLAScreenHeight: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if UIInterfaceOrientationIsPortrait(CLAOrientation) {
                 return UIScreen.mainScreen().bounds.size.height
             } else {
                 return UIScreen.mainScreen().bounds.size.width
