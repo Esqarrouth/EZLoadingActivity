@@ -46,6 +46,11 @@ struct EZLoadingActivity {
             return false
         }
         
+        guard topMostController != nil else {
+            print("EZLoadingActivity Error: You don't have any views set. You may be calling them in viewDidLoad. Try viewDidAppear instead.")
+            return false
+        }
+        
         instance = LoadingActivity(text: text, disableUI: disableUI)
         return true
     }
@@ -120,7 +125,7 @@ struct EZLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
-            UIApplication.topMostController().view.addSubview(self)
+            topMostController!.view.addSubview(self)
             
             if disableUI {
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -248,15 +253,12 @@ private extension UIScreen {
     }
 }
 
-private extension UIApplication {
-    class func topMostController() -> UIViewController {
-        let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
-        var topController = appDelegate.window!.rootViewController
-        
-        while topController?.presentedViewController != nil {
-            topController = topController?.presentedViewController
-        }
-        return topController!
+private var topMostController: UIViewController? {
+    var presentedVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+    while let pVC = presentedVC?.presentedViewController {
+        presentedVC = pVC
     }
+    
+    return presentedVC
 }
 
