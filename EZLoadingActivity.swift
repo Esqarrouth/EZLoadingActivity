@@ -94,9 +94,9 @@ struct EZLoadingActivity {
         var UIDisabled = false
         
         convenience init(text: String, disableUI: Bool) {
-            let width = UIScreen.CLAScreenWidth / Settings.WidthDivision
+            let width = UIScreen.ScreenWidth / Settings.WidthDivision
             let height = width / 3
-            self.init(frame: CGRect(x: UIScreen.CLAScreenWidth/2 - width/2, y: UIScreen.CLAScreenHeight/2 - height/2, width: width, height: height))
+            self.init(frame: CGRect(x: UIScreen.ScreenWidth/2 - width/2, y: UIScreen.ScreenHeight/2 - height/2, width: width, height: height))
             backgroundColor = Settings.BackgroundColor
             alpha = 1
             layer.cornerRadius = 8
@@ -120,7 +120,7 @@ struct EZLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
-            UIApplication.CLAtopMostController().view.addSubview(self)
+            UIApplication.topMostController().view.addSubview(self)
             
             if disableUI {
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
@@ -223,23 +223,23 @@ private extension NSObject {
 }
 
 private extension UIScreen {
-    class var CLAOrientation: UIInterfaceOrientation {
+    class var Orientation: UIInterfaceOrientation {
         get {
             return UIApplication.sharedApplication().statusBarOrientation
         }
     }
-    class var CLAScreenWidth: CGFloat {
+    class var ScreenWidth: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(CLAOrientation) {
+            if UIInterfaceOrientationIsPortrait(Orientation) {
                 return UIScreen.mainScreen().bounds.size.width
             } else {
                 return UIScreen.mainScreen().bounds.size.height
             }
         }
     }
-    class var CLAScreenHeight: CGFloat {
+    class var ScreenHeight: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(CLAOrientation) {
+            if UIInterfaceOrientationIsPortrait(Orientation) {
                 return UIScreen.mainScreen().bounds.size.height
             } else {
                 return UIScreen.mainScreen().bounds.size.width
@@ -249,7 +249,7 @@ private extension UIScreen {
 }
 
 private extension UIApplication {
-    class func CLAtopMostController() -> UIViewController {
+    class func topMostController() -> UIViewController {
         let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
         var topController = appDelegate.window!.rootViewController
         
