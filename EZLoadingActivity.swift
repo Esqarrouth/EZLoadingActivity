@@ -8,23 +8,23 @@
 
 import UIKit
 
-struct EZLoadingActivity {
+public struct EZLoadingActivity {
     
     //==========================================================================================================
     // Feel free to edit these variables
     //==========================================================================================================
-    struct Settings {
-        static var BackgroundColor = UIColor(red: 227/255, green: 232/255, blue: 235/255, alpha: 1.0)
-        static var ActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        static var TextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
-        static var FontName = "HelveticaNeue-Light"
+    public struct Settings {
+        public static var BackgroundColor = UIColor(red: 227/255, green: 232/255, blue: 235/255, alpha: 1.0)
+        public static var ActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        public static var TextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
+        public static var FontName = "HelveticaNeue-Light"
         // Other possible stuff: ✓ ✓ ✔︎ ✕ ✖︎ ✘
-        static var SuccessIcon = "✔︎"
-        static var FailIcon = "✘"
-        static var SuccessText = "Success"
-        static var FailText = "Failure"
-        static var SuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
-        static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
+        public static var SuccessIcon = "✔︎"
+        public static var FailIcon = "✘"
+        public static var SuccessText = "Success"
+        public static var FailText = "Failure"
+        public static var SuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
+        public static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
         static var WidthDivision: CGFloat {
             get {
                 if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
@@ -40,7 +40,7 @@ struct EZLoadingActivity {
     private static var hidingInProgress = false
     
     /// Disable UI stops users touch actions until EZLoadingActivity is hidden. Return success status
-    static func show(text: String, disableUI: Bool) -> Bool {
+    public static func show(text: String, disableUI: Bool) -> Bool {
         guard instance == nil else {
             print("EZLoadingActivity: You still have an active activity, please stop that before creating a new one")
             return false
@@ -55,7 +55,7 @@ struct EZLoadingActivity {
         return true
     }
     
-    static func showWithDelay(text: String, disableUI: Bool, seconds: Double) -> Bool {
+    public static func showWithDelay(text: String, disableUI: Bool, seconds: Double) -> Bool {
         let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
             hide(success: true, animated: false)
@@ -64,7 +64,7 @@ struct EZLoadingActivity {
     }
     
     /// Returns success status
-    static func hide(success success: Bool? = nil, animated: Bool = false) -> Bool {
+    public static func hide(success success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
             print("EZLoadingActivity: You don't have an activity instance")
             return false

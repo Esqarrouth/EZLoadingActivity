@@ -88,6 +88,23 @@ EZLoadingActivity is a singleton object so you don't need to keep track of its i
 1. Download and drop 'EZLoadingActivity.swift' in your project.  
 2. Congratulations!  
 
+## Install via CocoaPods
+
+You can use [Cocoapods](http://cocoapods.org/) to install `EZLoadingActivity` by adding it to your `Podfile`:
+
+```ruby
+platform :ios, '8.0'
+use_frameworks!
+
+pod 'EZLoadingActivity'
+```
+
+Then on the top of files where you are going to use this:
+
+```swift
+import EZLoadingActivity
+```
+
 ##Requirements
 
 - Xcode 6 or later (Tested on 7)
