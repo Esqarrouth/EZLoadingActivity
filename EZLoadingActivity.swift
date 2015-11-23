@@ -1,6 +1,6 @@
 //
-//  CozyLoadingActivity.swift
-//  Cozy
+//  EZLoadingActivity.swift
+//  EZLoadingActivity
 //
 //  Created by Goktug Yilmaz on 02/06/15.
 //  Copyright (c) 2015 Goktug Yilmaz. All rights reserved.
@@ -8,24 +8,24 @@
 
 import UIKit
 
-struct CozyLoadingActivity {
+struct EZLoadingActivity {
     
     //==========================================================================================================
     // Feel free to edit these variables
     //==========================================================================================================
     struct Settings {
-        static var CLABackgroundColor = UIColor(red: 227/255, green: 232/255, blue: 235/255, alpha: 1.0)
-        static var CLAActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        static var CLATextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
-        static var CLAFontName = "HelveticaNeue-Light"
+        static var BackgroundColor = UIColor(red: 227/255, green: 232/255, blue: 235/255, alpha: 1.0)
+        static var ActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        static var TextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
+        static var FontName = "HelveticaNeue-Light"
         // Other possible stuff: ✓ ✓ ✔︎ ✕ ✖︎ ✘
-        static var CLASuccessIcon = "✔︎"
-        static var CLAFailIcon = "✘"
-        static var CLASuccessText = "Success"
-        static var CLAFailText = "Failure"
-        static var CLASuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
-        static var CLAFailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
-        static var CLAWidthDivision: CGFloat {
+        static var SuccessIcon = "✔︎"
+        static var FailIcon = "✘"
+        static var SuccessText = "Success"
+        static var FailText = "Failure"
+        static var SuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
+        static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
+        static var WidthDivision: CGFloat {
             get {
                 if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
                     return  3.5
@@ -35,14 +35,14 @@ struct CozyLoadingActivity {
             }
         }
     }
-        
+    
     private static var instance: LoadingActivity?
     private static var hidingInProgress = false
     
-    /// Disable UI stops users touch actions until CozyLoadingActivity is hidden. Return success status
+    /// Disable UI stops users touch actions until EZLoadingActivity is hidden. Return success status
     static func show(text: String, disableUI: Bool) -> Bool {
         guard instance == nil else {
-            print("CozyLoadingActivity: You still have an active activity, please stop that before creating a new one")
+            print("EZLoadingActivity: You still have an active activity, please stop that before creating a new one")
             return false
         }
         
@@ -61,12 +61,12 @@ struct CozyLoadingActivity {
     /// Returns success status
     static func hide(success success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
-            print("CozyLoadingActivity: You don't have an activity instance")
+            print("EZLoadingActivity: You don't have an activity instance")
             return false
         }
         
         guard hidingInProgress == false else {
-            print("CozyLoadingActivity: Hiding already in progress")
+            print("EZLoadingActivity: Hiding already in progress")
             return false
         }
         
@@ -94,10 +94,10 @@ struct CozyLoadingActivity {
         var UIDisabled = false
         
         convenience init(text: String, disableUI: Bool) {
-            let width = UIScreen.CLAScreenWidth / Settings.CLAWidthDivision
+            let width = UIScreen.CLAScreenWidth / Settings.WidthDivision
             let height = width / 3
             self.init(frame: CGRect(x: UIScreen.CLAScreenWidth/2 - width/2, y: UIScreen.CLAScreenHeight/2 - height/2, width: width, height: height))
-            backgroundColor = Settings.CLABackgroundColor
+            backgroundColor = Settings.BackgroundColor
             alpha = 1
             layer.cornerRadius = 8
             createShadow()
@@ -106,12 +106,12 @@ struct CozyLoadingActivity {
             
             activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
             activityView.frame = CGRect(x: 10, y: yPosition, width: 40, height: 40)
-            activityView.color = Settings.CLAActivityColor
+            activityView.color = Settings.ActivityColor
             activityView.startAnimating()
             
             textLabel = UILabel(frame: CGRect(x: 60, y: yPosition, width: width - 70, height: 40))
-            textLabel.textColor = Settings.CLATextColor
-            textLabel.font = UIFont(name: Settings.CLAFontName, size: 30)
+            textLabel.textColor = Settings.TextColor
+            textLabel.font = UIFont(name: Settings.FontName, size: 30)
             textLabel.adjustsFontSizeToFitWidth = true
             textLabel.minimumScaleFactor = 0.25
             textLabel.textAlignment = NSTextAlignment.Center
@@ -163,7 +163,7 @@ struct CozyLoadingActivity {
             }
             
             icon = UILabel(frame: CGRect(x: 10, y: frame.height/2 - 20, width: 40, height: 40))
-            icon.font = UIFont(name: Settings.CLAFontName, size: 60)
+            icon.font = UIFont(name: Settings.FontName, size: 60)
             icon.textAlignment = NSTextAlignment.Center
             
             if animated {
@@ -172,16 +172,16 @@ struct CozyLoadingActivity {
             
             if success != nil {
                 if success! {
-                    icon.textColor = Settings.CLASuccessColor
-                    icon.text = Settings.CLASuccessIcon
-                    textLabel.text = Settings.CLASuccessText
+                    icon.textColor = Settings.SuccessColor
+                    icon.text = Settings.SuccessIcon
+                    textLabel.text = Settings.SuccessText
                 } else {
-                    icon.textColor = Settings.CLAFailColor
-                    icon.text = Settings.CLAFailIcon
-                    textLabel.text = Settings.CLAFailText
+                    icon.textColor = Settings.FailColor
+                    icon.text = Settings.FailIcon
+                    textLabel.text = Settings.FailText
                 }
             }
-
+            
             addSubview(icon)
             
             if animated {
@@ -205,7 +205,7 @@ struct CozyLoadingActivity {
 }
 
 private extension UIView {
-    /// Cozy extension: insert view.fadeTransition right before changing content
+    /// Extension: insert view.fadeTransition right before changing content
     func fadeTransition(duration: CFTimeInterval) {
         let animation: CATransition = CATransition()
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -216,7 +216,6 @@ private extension UIView {
 }
 
 private extension NSObject {
-    /// Cozy extension
     func callSelectorAsync(selector: Selector, delay: NSTimeInterval) {
         let timer = NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: selector, userInfo: nil, repeats: false)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
@@ -249,7 +248,7 @@ private extension UIScreen {
     }
 }
 
-extension UIApplication {
+private extension UIApplication {
     class func CLAtopMostController() -> UIViewController {
         let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
         var topController = appDelegate.window!.rootViewController
