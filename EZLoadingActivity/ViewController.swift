@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        EZLoadingActivity.showWithDelay("Testing..", disableUI: false, seconds: 3)
     }
 
     override func didReceiveMemoryWarning() {

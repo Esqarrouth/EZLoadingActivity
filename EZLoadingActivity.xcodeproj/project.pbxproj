@@ -12,6 +12,7 @@
 		E13884771C02D85500663C96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E13884751C02D85500663C96 /* Main.storyboard */; };
 		E13884791C02D85500663C96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E13884781C02D85500663C96 /* Assets.xcassets */; };
 		E138847C1C02D85500663C96 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E138847A1C02D85500663C96 /* LaunchScreen.storyboard */; };
+		E13884841C02D97700663C96 /* EZLoadingActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13884831C02D97700663C96 /* EZLoadingActivity.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		E13884781C02D85500663C96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E138847B1C02D85500663C96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E138847D1C02D85500663C96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E13884831C02D97700663C96 /* EZLoadingActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZLoadingActivity.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				E13884711C02D85500663C96 /* AppDelegate.swift */,
 				E13884731C02D85500663C96 /* ViewController.swift */,
+				E13884831C02D97700663C96 /* EZLoadingActivity.swift */,
 				E13884751C02D85500663C96 /* Main.storyboard */,
 				E13884781C02D85500663C96 /* Assets.xcassets */,
 				E138847A1C02D85500663C96 /* LaunchScreen.storyboard */,
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E13884841C02D97700663C96 /* EZLoadingActivity.swift in Sources */,
 				E13884741C02D85500663C96 /* ViewController.swift in Sources */,
 				E13884721C02D85500663C96 /* AppDelegate.swift in Sources */,
 			);
