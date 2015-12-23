@@ -51,7 +51,9 @@ public struct EZLoadingActivity {
             return false
         }
         
-        instance = LoadingActivity(text: text, disableUI: disableUI)
+        dispatch_async(dispatch_get_main_queue()) {
+            instance = LoadingActivity(text: text, disableUI: disableUI)
+        }
         return true
     }
     
