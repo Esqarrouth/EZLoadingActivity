@@ -1,5 +1,7 @@
 EZLoadingActivity
 ==========
+
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)  
 Lightweight Swift loading activity for iOS7+. Really simple to use, just add the class and write 1 line of code. 
 
 ![demo](http://i.imgur.com/xLHKvSB.gif)
