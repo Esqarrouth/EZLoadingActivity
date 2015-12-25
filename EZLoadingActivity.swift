@@ -103,7 +103,9 @@ public struct EZLoadingActivity {
         convenience init(text: String, disableUI: Bool) {
             let width = UIScreen.ScreenWidth / Settings.WidthDivision
             let height = width / 3
-            self.init(frame: CGRect(x: UIScreen.ScreenWidth/2 - width/2, y: UIScreen.ScreenHeight/2 - height/2, width: width, height: height))
+            self.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
+            center = CGPoint(x: UIScreen.mainScreen().bounds.midX, y: UIScreen.mainScreen().bounds.midY)
+            autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleRightMargin]
             backgroundColor = Settings.BackgroundColor
             alpha = 1
             layer.cornerRadius = 8
