@@ -50,9 +50,10 @@ public struct EZLoadingActivity {
             print("EZLoadingActivity Error: You don't have any views set. You may be calling them in viewDidLoad. Try viewDidAppear instead.")
             return false
         }
-        
+        // Separate creation from showing
+        instance = LoadingActivity(text: text, disableUI: disableUI)
         dispatch_async(dispatch_get_main_queue()) {
-            instance = LoadingActivity(text: text, disableUI: disableUI)
+            instance?.showLoadingActivity()
         }
         return true
     }
@@ -126,15 +127,17 @@ public struct EZLoadingActivity {
             textLabel.textAlignment = NSTextAlignment.Center
             textLabel.text = text
             
-            addSubview(activityView)
-            addSubview(textLabel)
-            
-            topMostController!.view.addSubview(self)
-            
             if disableUI {
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
                 UIDisabled = true
             }
+        }
+        
+        func showLoadingActivity() {
+            addSubview(activityView)
+            addSubview(textLabel)
+            
+            topMostController!.view.addSubview(self)
         }
         
         func createShadow() {
