@@ -53,6 +53,8 @@ EZLoadingActivity.show("Loading...", disableUI: false)
 |FailText|
 |SuccessColor|
 |FailColor|
+|ActivityWidth|
+|ActivityHeight|
 
 ## Example Use Case:
 

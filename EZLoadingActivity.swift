@@ -25,6 +25,8 @@ public struct EZLoadingActivity {
         public static var FailText = "Failure"
         public static var SuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
         public static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
+        public static var ActivityWidth = UIScreen.ScreenWidth / Settings.WidthDivision
+        public static var ActivityHeight = ActivityWidth / 3
         public static var WidthDivision: CGFloat {
             get {
                 if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
@@ -102,9 +104,7 @@ public struct EZLoadingActivity {
         var UIDisabled = false
         
         convenience init(text: String, disableUI: Bool) {
-            let width = UIScreen.ScreenWidth / Settings.WidthDivision
-            let height = width / 3
-            self.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
+            self.init(frame: CGRect(x: 0, y: 0, width: Settings.ActivityWidth, height: Settings.ActivityHeight))
             center = CGPoint(x: UIScreen.mainScreen().bounds.midX, y: UIScreen.mainScreen().bounds.midY)
             autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleRightMargin]
             backgroundColor = Settings.BackgroundColor
@@ -119,7 +119,7 @@ public struct EZLoadingActivity {
             activityView.color = Settings.ActivityColor
             activityView.startAnimating()
             
-            textLabel = UILabel(frame: CGRect(x: 60, y: yPosition, width: width - 70, height: 40))
+            textLabel = UILabel(frame: CGRect(x: 60, y: yPosition, width: Settings.ActivityWidth - 70, height: 40))
             textLabel.textColor = Settings.TextColor
             textLabel.font = UIFont(name: Settings.FontName, size: 30)
             textLabel.adjustsFontSizeToFitWidth = true
