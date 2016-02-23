@@ -68,6 +68,19 @@ public struct EZLoadingActivity {
         return showValue
     }
     
+    public static func showOnController(text: String, disableUI: Bool, controller:UIViewController) -> Bool{
+        guard instance == nil else {
+            print("EZLoadingActivity: You still have an active activity, please stop that before creating a new one")
+            return false
+        }
+        instance = LoadingActivity(text: text, disableUI: disableUI)
+        dispatch_async(dispatch_get_main_queue()) {
+            instance?.showLoadingWithController(controller);
+        }
+        
+        return true;
+    }
+    
     /// Returns success status
     public static func hide(success success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
@@ -138,6 +151,13 @@ public struct EZLoadingActivity {
             addSubview(textLabel)
             
             topMostController!.view.addSubview(self)
+        }
+        
+        func showLoadingWithController(controller:UIViewController){
+            addSubview(activityView)
+            addSubview(textLabel)
+            
+            controller.view.addSubview(self);
         }
         
         func createShadow() {
