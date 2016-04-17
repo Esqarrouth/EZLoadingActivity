@@ -36,6 +36,7 @@ public struct EZLoadingActivity {
                 }
             }
         }
+        public static var LoadOverApplicationWindow = false
     }
     
     private static var instance: LoadingActivity?
@@ -150,7 +151,11 @@ public struct EZLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
-            topMostController!.view.addSubview(self)
+            if Settings.LoadOverApplicationWindow {
+                UIApplication.sharedApplication().windows.first?.addSubview(self)
+            } else {
+                topMostController!.view.addSubview(self)
+            }
         }
         
         func showLoadingWithController(controller:UIViewController){
@@ -222,13 +227,13 @@ public struct EZLoadingActivity {
                 UIView.animateWithDuration(animationDuration, animations: {
                     self.icon.alpha = 1
                     }, completion: { (value: Bool) in
-                        self.callSelectorAsync("removeFromSuperview", delay: animationDuration)
+                        self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
                         instance = nil
                         hidingInProgress = false
                 })
             } else {
                 activityView.stopAnimating()
-                self.callSelectorAsync("removeFromSuperview", delay: animationDuration)
+                self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
                 instance = nil
                 hidingInProgress = false
             }
