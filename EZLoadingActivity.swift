@@ -37,6 +37,7 @@ public struct EZLoadingActivity {
                 }
             }
         }
+        public static var LoadOverApplicationWindow = false
     }
     
     private static var instance: LoadingActivity?
@@ -155,7 +156,11 @@ public struct EZLoadingActivity {
             
             //make it smoothly
             self.alpha = 0
-            topMostController!.view.addSubview(self)
+            if Settings.LoadOverApplicationWindow {
+                UIApplication.sharedApplication().windows.first?.addSubview(self)
+            } else {
+                topMostController!.view.addSubview(self)
+            }
             UIView.animateWithDuration(0.2, animations: {
                 self.alpha = 1
                 }, completion: { (success) in
