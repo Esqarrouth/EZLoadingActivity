@@ -38,6 +38,7 @@ public struct EZLoadingActivity {
             }
         }
         public static var DarkensBackground = false
+        public static var LoadOverApplicationWindow = false
     }
     
     fileprivate static var instance: LoadingActivity?
@@ -74,7 +75,7 @@ public struct EZLoadingActivity {
     public static func showWithDelay(_ text: String, disableUI: Bool, seconds: Double) -> Bool {
         let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
-            hide(success: true, animated: false)
+            hide(true, animated: false)
         }
         return showValue
     }
@@ -93,7 +94,7 @@ public struct EZLoadingActivity {
     }
     
     /// Returns success status
-    public static func hide(success: Bool? = nil, animated: Bool = false) -> Bool {
+    public static func hide(_ success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
             print("EZLoadingActivity: You don't have an activity instance")
             return false
@@ -106,10 +107,10 @@ public struct EZLoadingActivity {
         
         if !Thread.current.isMainThread {
             DispatchQueue.main.async {
-                instance?.hideLoadingActivity(success: success, animated: animated)
+                instance?.hideLoadingActivity(success, animated: animated)
             }
         } else {
-            instance?.hideLoadingActivity(success: success, animated: animated)
+            instance?.hideLoadingActivity(success, animated: animated)
         }
         
         if overlay != nil {
@@ -170,7 +171,11 @@ public struct EZLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
-            topMostController!.view.addSubview(self)
+            if Settings.LoadOverApplicationWindow {
+                UIApplication.shared.windows.first?.addSubview(self)
+            } else {
+                topMostController!.view.addSubview(self)
+            }
         }
         
         func showLoadingWithController(_ controller:UIViewController){
@@ -199,7 +204,7 @@ public struct EZLoadingActivity {
             return myBezier
         }
         
-        func hideLoadingActivity(success: Bool?, animated: Bool) {
+        func hideLoadingActivity(_ success: Bool?, animated: Bool) {
             hidingInProgress = true
             if UIDisabled {
                 UIApplication.shared.endIgnoringInteractionEvents()
