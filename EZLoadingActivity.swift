@@ -289,7 +289,7 @@ private var topMostController: UIViewController? {
     return presentedVC
 }
 
-extension CGRect {
+private extension CGRect {
     var midX: CGFloat {
         return CGRectGetMidX(self)
     }
