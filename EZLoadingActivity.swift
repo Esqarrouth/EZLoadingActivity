@@ -27,6 +27,7 @@ public struct EZLoadingActivity {
         public static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
         public static var ActivityWidth = UIScreen.ScreenWidth / Settings.WidthDivision
         public static var ActivityHeight = ActivityWidth / 3
+        public static var ShadowEnabled = true
         public static var WidthDivision: CGFloat {
             get {
                 if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
@@ -123,7 +124,9 @@ public struct EZLoadingActivity {
             backgroundColor = Settings.BackgroundColor
             alpha = 1
             layer.cornerRadius = 8
-            createShadow()
+            if Settings.ShadowEnabled {
+                createShadow()
+            }
             
             let yPosition = frame.height/2 - 20
             
