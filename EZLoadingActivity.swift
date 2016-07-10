@@ -37,10 +37,12 @@ public struct EZLoadingActivity {
                 }
             }
         }
+        public static var DarkensBackground = false
     }
     
     private static var instance: LoadingActivity?
     private static var hidingInProgress = false
+    private static var overlay: UIView!
     
     /// Disable UI stops users touch actions until EZLoadingActivity is hidden. Return success status
     public static func show(text: String, disableUI: Bool) -> Bool {
@@ -56,6 +58,14 @@ public struct EZLoadingActivity {
         // Separate creation from showing
         instance = LoadingActivity(text: text, disableUI: disableUI)
         dispatch_async(dispatch_get_main_queue()) {
+            if Settings.DarkensBackground {
+                if overlay == nil {
+                    overlay = UIView(frame: UIApplication.sharedApplication().keyWindow!.frame)
+                }
+                overlay.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+                topMostController?.view.addSubview(overlay)
+                UIView.animateWithDuration(0.2, animations: {overlay.backgroundColor = overlay.backgroundColor?.colorWithAlphaComponent(0.5)})
+            }
             instance?.showLoadingActivity()
         }
         return true
@@ -100,6 +110,13 @@ public struct EZLoadingActivity {
             }
         } else {
             instance?.hideLoadingActivity(success: success, animated: animated)
+        }
+        
+        if overlay != nil {
+        
+            UIView.animateWithDuration(0.2, animations: {
+                overlay.backgroundColor = overlay.backgroundColor?.colorWithAlphaComponent(0)
+            }, completion: { _ in overlay.removeFromSuperview() })
         }
         
         return true
