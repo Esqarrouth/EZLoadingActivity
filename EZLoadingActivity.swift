@@ -37,6 +37,7 @@ public struct EZLoadingActivity {
                 }
             }
         }
+        public static var LoadOverApplicationWindow = false
     }
     
     private static var instance: LoadingActivity?
@@ -153,14 +154,31 @@ public struct EZLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
-            topMostController!.view.addSubview(self)
+            //make it smoothly
+            self.alpha = 0
+            if Settings.LoadOverApplicationWindow {
+                UIApplication.sharedApplication().windows.first?.addSubview(self)
+            } else {
+                topMostController!.view.addSubview(self)
+            }
+            UIView.animateWithDuration(0.2, animations: {
+                self.alpha = 1
+                }, completion: { (success) in
+            })
         }
         
         func showLoadingWithController(controller:UIViewController){
             addSubview(activityView)
             addSubview(textLabel)
             
+            //make it smoothly
+            self.alpha = 0
             controller.view.addSubview(self);
+            UIView.animateWithDuration(0.2, animations: {
+                self.alpha = 1
+                }, completion: { (success) in
+            })
+            
         }
         
         func createShadow() {
@@ -225,7 +243,14 @@ public struct EZLoadingActivity {
                 UIView.animateWithDuration(animationDuration, animations: {
                     self.icon.alpha = 1
                     }, completion: { (value: Bool) in
-                        self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
+                        UIView.animateWithDuration(0.2, animations: {
+                            self.alpha = 0
+                        })
+                        UIView.animateWithDuration(0.2, animations: { 
+                            self.alpha = 0
+                            }, completion: { (success) in
+                                self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
+                        })
                         instance = nil
                         hidingInProgress = false
                 })
