@@ -1,7 +1,7 @@
 EZLoadingActivity
 ==========
 
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)  
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)  
 Lightweight Swift loading activity for iOS7+. Really simple to use, just add the class and write 1 line of code. 
 
 ![demo](http://i.imgur.com/xLHKvSB.gif)
@@ -94,7 +94,7 @@ EZLoadingActivity is a singleton object so you don't need to keep track of its i
 
 ## Install via CocoaPods
 
-You can use [Cocoapods](http://cocoapods.org/) to install `EZLoadingActivity` by adding it to your `Podfile`:
+You can use [CocoaPods](http://cocoapods.org/) to install `EZLoadingActivity` by adding it to your `Podfile`:
 
 ```ruby
 platform :ios, '8.0'
