@@ -30,7 +30,7 @@ public struct EZLoadingActivity {
         public static var ShadowEnabled = true
         public static var WidthDivision: CGFloat {
             get {
-                if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
                     return  3.5
                 } else {
                     return 1.6
@@ -40,12 +40,12 @@ public struct EZLoadingActivity {
         public static var DarkensBackground = false
     }
     
-    private static var instance: LoadingActivity?
-    private static var hidingInProgress = false
-    private static var overlay: UIView!
+    fileprivate static var instance: LoadingActivity?
+    fileprivate static var hidingInProgress = false
+    fileprivate static var overlay: UIView!
     
     /// Disable UI stops users touch actions until EZLoadingActivity is hidden. Return success status
-    public static func show(text: String, disableUI: Bool) -> Bool {
+    public static func show(_ text: String, disableUI: Bool) -> Bool {
         guard instance == nil else {
             print("EZLoadingActivity: You still have an active activity, please stop that before creating a new one")
             return false
@@ -57,21 +57,21 @@ public struct EZLoadingActivity {
         }
         // Separate creation from showing
         instance = LoadingActivity(text: text, disableUI: disableUI)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             if Settings.DarkensBackground {
                 if overlay == nil {
-                    overlay = UIView(frame: UIApplication.sharedApplication().keyWindow!.frame)
+                    overlay = UIView(frame: UIApplication.shared.keyWindow!.frame)
                 }
-                overlay.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0)
+                overlay.backgroundColor = UIColor.black.withAlphaComponent(0)
                 topMostController?.view.addSubview(overlay)
-                UIView.animateWithDuration(0.2, animations: {overlay.backgroundColor = overlay.backgroundColor?.colorWithAlphaComponent(0.5)})
+                UIView.animate(withDuration: 0.2, animations: {overlay.backgroundColor = overlay.backgroundColor?.withAlphaComponent(0.5)})
             }
             instance?.showLoadingActivity()
         }
         return true
     }
     
-    public static func showWithDelay(text: String, disableUI: Bool, seconds: Double) -> Bool {
+    public static func showWithDelay(_ text: String, disableUI: Bool, seconds: Double) -> Bool {
         let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
             hide(success: true, animated: false)
@@ -79,13 +79,13 @@ public struct EZLoadingActivity {
         return showValue
     }
     
-    public static func showOnController(text: String, disableUI: Bool, controller:UIViewController) -> Bool{
+    public static func showOnController(_ text: String, disableUI: Bool, controller:UIViewController) -> Bool{
         guard instance == nil else {
             print("EZLoadingActivity: You still have an active activity, please stop that before creating a new one")
             return false
         }
         instance = LoadingActivity(text: text, disableUI: disableUI)
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             instance?.showLoadingWithController(controller);
         }
         
@@ -93,7 +93,7 @@ public struct EZLoadingActivity {
     }
     
     /// Returns success status
-    public static func hide(success success: Bool? = nil, animated: Bool = false) -> Bool {
+    public static func hide(success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
             print("EZLoadingActivity: You don't have an activity instance")
             return false
@@ -104,8 +104,8 @@ public struct EZLoadingActivity {
             return false
         }
         
-        if !NSThread.currentThread().isMainThread {
-            dispatch_async(dispatch_get_main_queue()) {
+        if !Thread.current.isMainThread {
+            DispatchQueue.main.async {
                 instance?.hideLoadingActivity(success: success, animated: animated)
             }
         } else {
@@ -114,21 +114,21 @@ public struct EZLoadingActivity {
         
         if overlay != nil {
         
-            UIView.animateWithDuration(0.2, animations: {
-                overlay.backgroundColor = overlay.backgroundColor?.colorWithAlphaComponent(0)
+            UIView.animate(withDuration: 0.2, animations: {
+                overlay.backgroundColor = overlay.backgroundColor?.withAlphaComponent(0)
             }, completion: { _ in overlay.removeFromSuperview() })
         }
         
         return true
     }
     
-    private static func delay(seconds: Double, after: ()->()) {
-        let queue = dispatch_get_main_queue()
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
-        dispatch_after(time, queue, after)
+    fileprivate static func delay(_ seconds: Double, after: @escaping ()->()) {
+        let queue = DispatchQueue.main
+        let time = DispatchTime.now() + Double(Int64(seconds * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        queue.asyncAfter(deadline: time, execute: after)
     }
     
-    private class LoadingActivity: UIView {
+    fileprivate class LoadingActivity: UIView {
         var textLabel: UILabel!
         var activityView: UIActivityIndicatorView!
         var icon: UILabel!
@@ -137,7 +137,7 @@ public struct EZLoadingActivity {
         convenience init(text: String, disableUI: Bool) {
             self.init(frame: CGRect(x: 0, y: 0, width: Settings.ActivityWidth, height: Settings.ActivityHeight))
             center = CGPoint(x: topMostController!.view.bounds.midX, y: topMostController!.view.bounds.midY)
-            autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleRightMargin]
+            autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleRightMargin]
             backgroundColor = Settings.BackgroundColor
             alpha = 1
             layer.cornerRadius = 8
@@ -147,7 +147,7 @@ public struct EZLoadingActivity {
             
             let yPosition = frame.height/2 - 20
             
-            activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+            activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
             activityView.frame = CGRect(x: 10, y: yPosition, width: 40, height: 40)
             activityView.color = Settings.ActivityColor
             activityView.startAnimating()
@@ -157,11 +157,11 @@ public struct EZLoadingActivity {
             textLabel.font = UIFont(name: Settings.FontName, size: 30)
             textLabel.adjustsFontSizeToFitWidth = true
             textLabel.minimumScaleFactor = 0.25
-            textLabel.textAlignment = NSTextAlignment.Center
+            textLabel.textAlignment = NSTextAlignment.center
             textLabel.text = text
             
             if disableUI {
-                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                UIApplication.shared.beginIgnoringInteractionEvents()
                 UIDisabled = true
             }
         }
@@ -173,7 +173,7 @@ public struct EZLoadingActivity {
             topMostController!.view.addSubview(self)
         }
         
-        func showLoadingWithController(controller:UIViewController){
+        func showLoadingWithController(_ controller:UIViewController){
             addSubview(activityView)
             addSubview(textLabel)
             
@@ -181,28 +181,28 @@ public struct EZLoadingActivity {
         }
         
         func createShadow() {
-            layer.shadowPath = createShadowPath().CGPath
+            layer.shadowPath = createShadowPath().cgPath
             layer.masksToBounds = false
-            layer.shadowColor = UIColor.blackColor().CGColor
-            layer.shadowOffset = CGSizeMake(0, 0)
+            layer.shadowColor = UIColor.black.cgColor
+            layer.shadowOffset = CGSize(width: 0, height: 0)
             layer.shadowRadius = 5
             layer.shadowOpacity = 0.5
         }
         
         func createShadowPath() -> UIBezierPath {
             let myBezier = UIBezierPath()
-            myBezier.moveToPoint(CGPoint(x: -3, y: -3))
-            myBezier.addLineToPoint(CGPoint(x: frame.width + 3, y: -3))
-            myBezier.addLineToPoint(CGPoint(x: frame.width + 3, y: frame.height + 3))
-            myBezier.addLineToPoint(CGPoint(x: -3, y: frame.height + 3))
-            myBezier.closePath()
+            myBezier.move(to: CGPoint(x: -3, y: -3))
+            myBezier.addLine(to: CGPoint(x: frame.width + 3, y: -3))
+            myBezier.addLine(to: CGPoint(x: frame.width + 3, y: frame.height + 3))
+            myBezier.addLine(to: CGPoint(x: -3, y: frame.height + 3))
+            myBezier.close()
             return myBezier
         }
         
-        func hideLoadingActivity(success success: Bool?, animated: Bool) {
+        func hideLoadingActivity(success: Bool?, animated: Bool) {
             hidingInProgress = true
             if UIDisabled {
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             
             var animationDuration: Double = 0
@@ -216,7 +216,7 @@ public struct EZLoadingActivity {
             
             icon = UILabel(frame: CGRect(x: 10, y: frame.height/2 - 20, width: 40, height: 40))
             icon.font = UIFont(name: Settings.FontName, size: 60)
-            icon.textAlignment = NSTextAlignment.Center
+            icon.textAlignment = NSTextAlignment.center
             
             if animated {
                 textLabel.fadeTransition(animationDuration)
@@ -239,7 +239,7 @@ public struct EZLoadingActivity {
             if animated {
                 icon.alpha = 0
                 activityView.stopAnimating()
-                UIView.animateWithDuration(animationDuration, animations: {
+                UIView.animate(withDuration: animationDuration, animations: {
                     self.icon.alpha = 1
                     }, completion: { (value: Bool) in
                         self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
@@ -258,50 +258,50 @@ public struct EZLoadingActivity {
 
 private extension UIView {
     /// Extension: insert view.fadeTransition right before changing content
-    func fadeTransition(duration: CFTimeInterval) {
+    func fadeTransition(_ duration: CFTimeInterval) {
         let animation: CATransition = CATransition()
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = kCATransitionFade
         animation.duration = duration
-        self.layer.addAnimation(animation, forKey: kCATransitionFade)
+        self.layer.add(animation, forKey: kCATransitionFade)
     }
 }
 
 private extension NSObject {
-    func callSelectorAsync(selector: Selector, delay: NSTimeInterval) {
-        let timer = NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: selector, userInfo: nil, repeats: false)
-        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+    func callSelectorAsync(_ selector: Selector, delay: TimeInterval) {
+        let timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: selector, userInfo: nil, repeats: false)
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
     }
 }
 
 private extension UIScreen {
     class var Orientation: UIInterfaceOrientation {
         get {
-            return UIApplication.sharedApplication().statusBarOrientation
+            return UIApplication.shared.statusBarOrientation
         }
     }
     class var ScreenWidth: CGFloat {
         get {
             if UIInterfaceOrientationIsPortrait(Orientation) {
-                return UIScreen.mainScreen().bounds.size.width
+                return UIScreen.main.bounds.size.width
             } else {
-                return UIScreen.mainScreen().bounds.size.height
+                return UIScreen.main.bounds.size.height
             }
         }
     }
     class var ScreenHeight: CGFloat {
         get {
             if UIInterfaceOrientationIsPortrait(Orientation) {
-                return UIScreen.mainScreen().bounds.size.height
+                return UIScreen.main.bounds.size.height
             } else {
-                return UIScreen.mainScreen().bounds.size.width
+                return UIScreen.main.bounds.size.width
             }
         }
     }
 }
 
 private var topMostController: UIViewController? {
-    var presentedVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+    var presentedVC = UIApplication.shared.keyWindow?.rootViewController
     while let pVC = presentedVC?.presentedViewController {
         presentedVC = pVC
     }
@@ -311,10 +311,10 @@ private var topMostController: UIViewController? {
 
 private extension CGRect {
     var midX: CGFloat {
-        return CGRectGetMidX(self)
+        return self.midX
     }
     
     var midY: CGFloat {
-        return CGRectGetMidY(self)
+        return self.midY
     }
 }
