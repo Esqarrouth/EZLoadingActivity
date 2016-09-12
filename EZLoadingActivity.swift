@@ -308,13 +308,3 @@ private var topMostController: UIViewController? {
     
     return presentedVC
 }
-
-private extension CGRect {
-    var midX: CGFloat {
-        return self.midX
-    }
-    
-    var midY: CGFloat {
-        return self.midY
-    }
-}
