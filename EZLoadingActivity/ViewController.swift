@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     private lazy var button: UIButton = {
         let _button = UIButton(type: .system)
         _button.setTitle("Show EZLoadingActivity", for: .normal)
-        _button.addTarget(self, action: #selector(ViewController.showLoadingActivity(_:)), for: .touchUpInside)
+        _button.addTarget(self, action: #selector(showLoadingActivity), for: .touchUpInside)
         return _button
     }()
 
