@@ -11,9 +11,9 @@ import UIKit
 class ViewController: UIViewController {
 
     private lazy var button: UIButton = {
-        let _button = UIButton(type: .System)
-        _button.setTitle("Show EZLoadingActivity", forState: .Normal)
-        _button.addTarget(self, action: Selector("showLoadingActivity:"), forControlEvents: .TouchUpInside)
+        let _button = UIButton(type: .system)
+        _button.setTitle("Show EZLoadingActivity", for: .normal)
+        _button.addTarget(self, action: #selector(showLoadingActivity), for: .touchUpInside)
         return _button
     }()
 
@@ -23,12 +23,12 @@ class ViewController: UIViewController {
 
         if #available(iOS 9.0, *) {
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
-            button.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         } else {
             button.sizeToFit()
             button.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
-            button.autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleRightMargin]
+            button.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleRightMargin]
         }
     }
 
