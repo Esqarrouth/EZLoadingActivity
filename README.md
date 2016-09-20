@@ -1,7 +1,9 @@
 EZLoadingActivity
 ==========
 
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)  
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 Lightweight Swift loading activity for iOS7+. Really simple to use, just add the class and write 1 line of code. 
 
 ![demo](http://i.imgur.com/xLHKvSB.gif)
@@ -91,6 +93,31 @@ EZLoadingActivity is a singleton object so you don't need to keep track of its i
 
 1. Download and drop 'EZLoadingActivity.swift' in your project.  
 2. Congratulations!  
+
+## Install via Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate EZLoadingActivity into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "goktugyil/EZLoadingActivity"
+```
+
+Run `carthage update` to build the framework and drag the built `EZLoadingActivity.framework` into your Xcode project.
+
+Then on the top of files where you are going to use this:
+
+```swift
+import EZLoadingActivity
+```
 
 ## Install via CocoaPods
 
