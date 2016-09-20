@@ -37,8 +37,8 @@ public struct EZLoadingActivity {
                 }
             }
         }
-        public static var DarkensBackground = false
         public static var LoadOverApplicationWindow = false
+        public static var DarkensBackground = false
     }
     
     fileprivate static var instance: LoadingActivity?

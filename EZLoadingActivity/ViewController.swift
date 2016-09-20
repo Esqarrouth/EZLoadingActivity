@@ -10,9 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    fileprivate lazy var button: UIButton = {
+    private lazy var button: UIButton = {
         let _button = UIButton(type: .system)
-        _button.setTitle("Show EZLoadingActivity", for: UIControlState())
+        _button.setTitle("Show EZLoadingActivity", for: .normal)
         _button.addTarget(self, action: #selector(ViewController.showLoadingActivity(_:)), for: .touchUpInside)
         return _button
     }()
