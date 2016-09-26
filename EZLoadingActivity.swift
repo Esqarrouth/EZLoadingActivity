@@ -172,6 +172,9 @@ public struct EZLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
+            //make it smoothly
+            self.alpha = 0
+
             if Settings.LoadOverApplicationWindow {
                 UIApplication.shared.windows.first?.addSubview(self)
             } else {
@@ -179,8 +182,6 @@ public struct EZLoadingActivity {
             }
             
             //make it smoothly
-            self.alpha = 0
-            topMostController!.view.addSubview(self)
             UIView.animate(withDuration: 0.2, animations: {
                 self.alpha = 1
             })
