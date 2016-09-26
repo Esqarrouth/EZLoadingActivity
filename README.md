@@ -127,7 +127,10 @@ You can use [CocoaPods](http://cocoapods.org/) to install `EZLoadingActivity` by
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'EZLoadingActivity'
+pod 'EZLoadingActivity' #Stable release for Swift 3.0
+
+pod 'EZLoadingActivity', :git => 'https://github.com/goktugyil/EZLoadingActivity.git' #Latest release for Swift 3.0
+pod 'EZLoadingActivity', '~> 0.8' #For Swift 2.2
 ```
 
 Then on the top of files where you are going to use this:
