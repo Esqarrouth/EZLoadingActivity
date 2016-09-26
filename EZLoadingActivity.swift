@@ -87,10 +87,10 @@ public struct EZLoadingActivity {
         }
         instance = LoadingActivity(text: text, disableUI: disableUI)
         DispatchQueue.main.async {
-            instance?.showLoadingWithController(controller);
+            instance?.showLoadingWithController(controller)
         }
         
-        return true;
+        return true
     }
     
     /// Returns success status
@@ -193,7 +193,7 @@ public struct EZLoadingActivity {
             
             //make it smoothly
             self.alpha = 0
-            controller.view.addSubview(self);
+            controller.view.addSubview(self)
             UIView.animate(withDuration: 0.2, animations: {
                 self.alpha = 1
             })
