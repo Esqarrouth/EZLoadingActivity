@@ -154,6 +154,7 @@
 					};
 					E138846D1C02D85500663C96 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};

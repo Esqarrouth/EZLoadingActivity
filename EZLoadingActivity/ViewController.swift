@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func showLoadingActivity(sender: UIButton) {
+    @IBAction func showLoadingActivity(_ sender: UIButton) {
         EZLoadingActivity.showWithDelay("Testing..", disableUI: false, seconds: 3)
     }
 
