@@ -114,10 +114,11 @@ public struct EZLoadingActivity {
         }
         
         if overlay != nil {
-        
             UIView.animate(withDuration: 0.2, animations: {
                 overlay.backgroundColor = overlay.backgroundColor?.withAlphaComponent(0)
-            }, completion: { _ in overlay.removeFromSuperview() })
+            }, completion: { _ in
+                overlay.removeFromSuperview()
+            })
         }
         
         return true
@@ -182,7 +183,6 @@ public struct EZLoadingActivity {
             topMostController!.view.addSubview(self)
             UIView.animate(withDuration: 0.2, animations: {
                 self.alpha = 1
-                }, completion: { (success) in
             })
         }
         
@@ -195,9 +195,7 @@ public struct EZLoadingActivity {
             controller.view.addSubview(self);
             UIView.animate(withDuration: 0.2, animations: {
                 self.alpha = 1
-                }, completion: { (success) in
             })
-            
         }
         
         func createShadow() {
@@ -261,17 +259,17 @@ public struct EZLoadingActivity {
                 activityView.stopAnimating()
                 UIView.animate(withDuration: animationDuration, animations: {
                     self.icon.alpha = 1
-                    }, completion: { (value: Bool) in
-                        UIView.animate(withDuration: 0.2, animations: {
-                            self.alpha = 0
-                        })
-                        UIView.animate(withDuration: 0.2, animations: { 
-                            self.alpha = 0
-                            }, completion: { (success) in
-                                self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
-                        })
-                        instance = nil
-                        hidingInProgress = false
+                }, completion: { (value: Bool) in
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.alpha = 0
+                    })
+                    UIView.animate(withDuration: 0.2, animations: { 
+                        self.alpha = 0
+                    }, completion: { (success) in
+                        self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
+                    })
+                    instance = nil
+                    hidingInProgress = false
                 })
             } else {
                 activityView.stopAnimating()
