@@ -263,9 +263,6 @@ public struct EZLoadingActivity {
                 }, completion: { (value: Bool) in
                     UIView.animate(withDuration: 0.2, animations: {
                         self.alpha = 0
-                    })
-                    UIView.animate(withDuration: 0.2, animations: { 
-                        self.alpha = 0
                     }, completion: { (success) in
                         self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
                     })
