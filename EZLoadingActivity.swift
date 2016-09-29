@@ -46,6 +46,7 @@ public struct EZLoadingActivity {
     fileprivate static var overlay: UIView!
     
     /// Disable UI stops users touch actions until EZLoadingActivity is hidden. Return success status
+    @discardableResult
     public static func show(_ text: String, disableUI: Bool) -> Bool {
         guard instance == nil else {
             print("EZLoadingActivity: You still have an active activity, please stop that before creating a new one")
@@ -71,7 +72,7 @@ public struct EZLoadingActivity {
         }
         return true
     }
-    
+    @discardableResult
     public static func showWithDelay(_ text: String, disableUI: Bool, seconds: Double) -> Bool {
         let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
@@ -94,6 +95,7 @@ public struct EZLoadingActivity {
     }
     
     /// Returns success status
+    @discardableResult
     public static func hide(_ success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
             print("EZLoadingActivity: You don't have an activity instance")
@@ -116,8 +118,8 @@ public struct EZLoadingActivity {
         if overlay != nil {
             UIView.animate(withDuration: 0.2, animations: {
                 overlay.backgroundColor = overlay.backgroundColor?.withAlphaComponent(0)
-            }, completion: { _ in
-                overlay.removeFromSuperview()
+                }, completion: { _ in
+                    overlay.removeFromSuperview()
             })
         }
         
@@ -174,7 +176,7 @@ public struct EZLoadingActivity {
             
             //make it smoothly
             self.alpha = 0
-
+            
             if Settings.LoadOverApplicationWindow {
                 UIApplication.shared.windows.first?.addSubview(self)
             } else {
@@ -260,14 +262,14 @@ public struct EZLoadingActivity {
                 activityView.stopAnimating()
                 UIView.animate(withDuration: animationDuration, animations: {
                     self.icon.alpha = 1
-                }, completion: { (value: Bool) in
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.alpha = 0
-                    }, completion: { (success) in
-                        self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
-                    })
-                    instance = nil
-                    hidingInProgress = false
+                    }, completion: { (value: Bool) in
+                        UIView.animate(withDuration: 0.2, animations: {
+                            self.alpha = 0
+                            }, completion: { (success) in
+                                self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
+                        })
+                        instance = nil
+                        hidingInProgress = false
                 })
             } else {
                 activityView.stopAnimating()
