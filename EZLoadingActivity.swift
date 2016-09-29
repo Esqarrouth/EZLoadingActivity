@@ -37,6 +37,7 @@ public struct EZLoadingActivity {
                 }
             }
         }
+        public static var LoadOverApplicationWindow = false
         public static var DarkensBackground = false
     }
     
@@ -74,7 +75,7 @@ public struct EZLoadingActivity {
     public static func showWithDelay(_ text: String, disableUI: Bool, seconds: Double) -> Bool {
         let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
-            hide(success: true, animated: false)
+            hide(true, animated: false)
         }
         return showValue
     }
@@ -86,14 +87,14 @@ public struct EZLoadingActivity {
         }
         instance = LoadingActivity(text: text, disableUI: disableUI)
         DispatchQueue.main.async {
-            instance?.showLoadingWithController(controller);
+            instance?.showLoadingWithController(controller)
         }
         
-        return true;
+        return true
     }
     
     /// Returns success status
-    public static func hide(success: Bool? = nil, animated: Bool = false) -> Bool {
+    public static func hide(_ success: Bool? = nil, animated: Bool = false) -> Bool {
         guard instance != nil else {
             print("EZLoadingActivity: You don't have an activity instance")
             return false
@@ -106,17 +107,18 @@ public struct EZLoadingActivity {
         
         if !Thread.current.isMainThread {
             DispatchQueue.main.async {
-                instance?.hideLoadingActivity(success: success, animated: animated)
+                instance?.hideLoadingActivity(success, animated: animated)
             }
         } else {
-            instance?.hideLoadingActivity(success: success, animated: animated)
+            instance?.hideLoadingActivity(success, animated: animated)
         }
         
         if overlay != nil {
-        
             UIView.animate(withDuration: 0.2, animations: {
                 overlay.backgroundColor = overlay.backgroundColor?.withAlphaComponent(0)
-            }, completion: { _ in overlay.removeFromSuperview() })
+            }, completion: { _ in
+                overlay.removeFromSuperview()
+            })
         }
         
         return true
@@ -170,14 +172,31 @@ public struct EZLoadingActivity {
             addSubview(activityView)
             addSubview(textLabel)
             
-            topMostController!.view.addSubview(self)
+            //make it smoothly
+            self.alpha = 0
+
+            if Settings.LoadOverApplicationWindow {
+                UIApplication.shared.windows.first?.addSubview(self)
+            } else {
+                topMostController!.view.addSubview(self)
+            }
+            
+            //make it smoothly
+            UIView.animate(withDuration: 0.2, animations: {
+                self.alpha = 1
+            })
         }
         
         func showLoadingWithController(_ controller:UIViewController){
             addSubview(activityView)
             addSubview(textLabel)
             
-            controller.view.addSubview(self);
+            //make it smoothly
+            self.alpha = 0
+            controller.view.addSubview(self)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.alpha = 1
+            })
         }
         
         func createShadow() {
@@ -199,7 +218,7 @@ public struct EZLoadingActivity {
             return myBezier
         }
         
-        func hideLoadingActivity(success: Bool?, animated: Bool) {
+        func hideLoadingActivity(_ success: Bool?, animated: Bool) {
             hidingInProgress = true
             if UIDisabled {
                 UIApplication.shared.endIgnoringInteractionEvents()
@@ -241,10 +260,14 @@ public struct EZLoadingActivity {
                 activityView.stopAnimating()
                 UIView.animate(withDuration: animationDuration, animations: {
                     self.icon.alpha = 1
-                    }, completion: { (value: Bool) in
+                }, completion: { (value: Bool) in
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.alpha = 0
+                    }, completion: { (success) in
                         self.callSelectorAsync(#selector(UIView.removeFromSuperview), delay: animationDuration)
-                        instance = nil
-                        hidingInProgress = false
+                    })
+                    instance = nil
+                    hidingInProgress = false
                 })
             } else {
                 activityView.stopAnimating()
