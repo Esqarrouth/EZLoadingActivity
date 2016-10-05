@@ -86,6 +86,12 @@ postObject.saveInBackgroundWithBlock { (succeeded: Bool, error: NSError!) -> Voi
 EZLoadingActivity.showWithDelay("Waiting...", disableUI: false, seconds: 2)
 ```
 
+######Showing EZLoadingActivity from App Window(For example: for Split view controller):
+
+```swift
+EZLoadingActivity.Settings.LoadOverApplicationWindow = true
+```
+
 ## No object tracking:
 EZLoadingActivity is a singleton object so you don't need to keep track of its instance.  
 
