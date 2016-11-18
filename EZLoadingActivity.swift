@@ -76,7 +76,7 @@ public struct EZLoadingActivity {
     public static func showWithDelay(_ text: String, disableUI: Bool, seconds: Double) -> Bool {
         let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
-            hide(true, animated: false)
+            _ = hide(true, animated: false)
         }
         return showValue
     }
