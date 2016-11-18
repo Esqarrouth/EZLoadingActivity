@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = "EZLoadingActivity"
-s.version          = "1.0"
+s.version          = "1.01"
 s.summary          = "Lightweight Swift loading activity for iOS7+"
 s.description      = "Lightweight Swift loading activity for iOS7+. Really simple to use, just add the class and write 1 line of code."
 s.homepage         = "https://github.com/goktugyil/EZLoadingActivity"
