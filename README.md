@@ -4,6 +4,12 @@ EZLoadingActivity
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)](https://img.shields.io/cocoapods/v/EZLoadingActivity.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
+<p>
+<a href="http://cocoapods.org/pods/EZLoadingActivity"><img src="https://img.shields.io/cocoapods/at/EZLoadingActivity.svg?label=Apps%20Using%20EZLoadingActivity&colorB=28B9FE"></a>
+<a href="http://cocoapods.org/pods/EZLoadingActivity"><img src="https://img.shields.io/cocoapods/dt/EZLoadingActivity.svg?label=Total%20Downloads&colorB=28B9FE"></a>
+<a href="http://cocoapods.org/pods/EZLoadingActivity"><img src="https://img.shields.io/cocoapods/dm/EZLoadingActivity.svg?label=Downloads&colorB=28B9FE"></a>
+</p>
+
 Lightweight Swift loading activity for iOS7+. Really simple to use, just add the class and write 1 line of code. 
 
 ![demo](http://i.imgur.com/xLHKvSB.gif)
