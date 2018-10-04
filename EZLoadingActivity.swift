@@ -151,7 +151,7 @@ public struct EZLoadingActivity {
             
             let yPosition = frame.height/2 - 20
             
-            activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+            activityView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
             activityView.frame = CGRect(x: 10, y: yPosition, width: 40, height: 40)
             activityView.color = Settings.ActivityColor
             activityView.startAnimating()
@@ -285,17 +285,17 @@ private extension UIView {
     /// Extension: insert view.fadeTransition right before changing content
     func fadeTransition(_ duration: CFTimeInterval) {
         let animation: CATransition = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.type = kCATransitionFade
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.type = CATransitionType.fade
         animation.duration = duration
-        self.layer.add(animation, forKey: kCATransitionFade)
+        self.layer.add(animation, forKey: CATransitionType.fade.rawValue)
     }
 }
 
 private extension NSObject {
     func callSelectorAsync(_ selector: Selector, delay: TimeInterval) {
         let timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: selector, userInfo: nil, repeats: false)
-        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
     }
 }
 
@@ -307,7 +307,7 @@ private extension UIScreen {
     }
     class var ScreenWidth: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if Orientation.isPortrait {
                 return UIScreen.main.bounds.size.width
             } else {
                 return UIScreen.main.bounds.size.height
@@ -316,7 +316,7 @@ private extension UIScreen {
     }
     class var ScreenHeight: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if Orientation.isPortrait {
                 return UIScreen.main.bounds.size.height
             } else {
                 return UIScreen.main.bounds.size.width
