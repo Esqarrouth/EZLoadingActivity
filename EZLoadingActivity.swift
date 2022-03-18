@@ -14,10 +14,10 @@ public struct EZLoadingActivity {
     // Feel free to edit these variables
     //==========================================================================================================
     public struct Settings {
-        public static var BackgroundColor = UIColor(red: 227/255, green: 232/255, blue: 235/255, alpha: 1.0)
-        public static var ActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        public static var TextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
-        public static var FontName = "HelveticaNeue-Light"
+        public static var BackgroundColor = UIColor(red: 31/255, green: 38/255, blue: 5/255, alpha: 0.5)
+        public static var ActivityColor = UIColor(red: 141/255, green: 141/255, blue: 6/255, alpha: 1.0)
+        public static var TextColor = UIColor(red: 250/255, green: 250/255, blue: 17/255, alpha: 1.0)
+        public static var FontName = "Cochin-BoldItalic"
         // Other possible stuff: ✓ ✓ ✔︎ ✕ ✖︎ ✘
         public static var SuccessIcon = "✔︎"
         public static var FailIcon = "✘"
@@ -151,7 +151,7 @@ public struct EZLoadingActivity {
             
             let yPosition = frame.height/2 - 20
             
-            activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+            activityView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
             activityView.frame = CGRect(x: 10, y: yPosition, width: 40, height: 40)
             activityView.color = Settings.ActivityColor
             activityView.startAnimating()
@@ -285,17 +285,17 @@ private extension UIView {
     /// Extension: insert view.fadeTransition right before changing content
     func fadeTransition(_ duration: CFTimeInterval) {
         let animation: CATransition = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.type = kCATransitionFade
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.type = CATransitionType.fade
         animation.duration = duration
-        self.layer.add(animation, forKey: kCATransitionFade)
+        self.layer.add(animation, forKey: CATransitionType.fade.rawValue)
     }
 }
 
 private extension NSObject {
     func callSelectorAsync(_ selector: Selector, delay: TimeInterval) {
         let timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: selector, userInfo: nil, repeats: false)
-        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
     }
 }
 
@@ -307,7 +307,7 @@ private extension UIScreen {
     }
     class var ScreenWidth: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if Orientation.isPortrait {
                 return UIScreen.main.bounds.size.width
             } else {
                 return UIScreen.main.bounds.size.height
@@ -316,7 +316,7 @@ private extension UIScreen {
     }
     class var ScreenHeight: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if Orientation.isPortrait {
                 return UIScreen.main.bounds.size.height
             } else {
                 return UIScreen.main.bounds.size.width
